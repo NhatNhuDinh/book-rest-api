@@ -8,11 +8,12 @@ import com.book.bookrestapi.repository.AuthorRepository;
 import com.book.bookrestapi.service.AuthorService;
 import com.book.bookrestapi.web.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,14 +46,14 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<AuthorResponse> list(String keyword, Pageable pageable) {
-        Page<Author> authors;
+    public List<AuthorResponse> list(String keyword) {
+        List<Author> authors;
         if (StringUtils.hasText(keyword)) {
-            authors = authorRepository.findByNameContainingIgnoreCase(keyword, pageable);
+            authors = authorRepository.findByNameContainingIgnoreCase(keyword);
         } else {
-            authors = authorRepository.findAll(pageable);
+            authors = authorRepository.findAll();
         }
-        return authors.map(this::toDto);
+        return authors.stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Override

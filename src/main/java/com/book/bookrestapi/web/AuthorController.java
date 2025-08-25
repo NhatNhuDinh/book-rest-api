@@ -14,12 +14,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -103,7 +102,7 @@ public class AuthorController {
     @GetMapping
     @Operation(
             summary = "Lấy danh sách tác giả",
-            description = "Lấy danh sách tác giả với khả năng tìm kiếm và phân trang"
+            description = "Lấy danh sách tác giả với khả năng tìm kiếm"
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -111,16 +110,15 @@ public class AuthorController {
                     description = "Danh sách tác giả",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = Page.class)
+                            schema = @Schema(implementation = List.class)
                     )
             )
     })
-    public ResponseEntity<Page<AuthorResponse>> getAuthors(
+    public ResponseEntity<List<AuthorResponse>> getAuthors(
             @Parameter(description = "Từ khóa tìm kiếm theo tên tác giả", example = "Nguyễn")
-            @RequestParam(required = false) String q,
-            Pageable pageable
+            @RequestParam(required = false) String q
     ) {
-        Page<AuthorResponse> response = authorService.list(q, pageable);
+        List<AuthorResponse> response = authorService.list(q);
         return ResponseEntity.ok(response);
     }
 

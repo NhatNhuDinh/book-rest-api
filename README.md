@@ -55,7 +55,7 @@ com.book.bookrestapi/
 |--------|----------|-------------|
 | POST | `/api/authors` | Tạo mới tác giả |
 | GET | `/api/authors/{id}` | Lấy thông tin tác giả theo ID |
-| GET | `/api/authors?q=&page=&size=&sort=` | Lấy danh sách tác giả với tìm kiếm và phân trang |
+| GET | `/api/authors?q=` | Lấy danh sách tác giả với tìm kiếm |
 | PATCH | `/api/authors/{id}` | Cập nhật thông tin tác giả |
 | DELETE | `/api/authors/{id}` | Xóa tác giả |
 
@@ -65,7 +65,7 @@ com.book.bookrestapi/
 |--------|----------|-------------|
 | POST | `/api/books` | Tạo mới sách |
 | GET | `/api/books/{id}` | Lấy thông tin sách theo ID |
-| GET | `/api/books?q=&authorId=&page=&size=&sort=` | Lấy danh sách sách với tìm kiếm, lọc và phân trang |
+| GET | `/api/books?q=&authorId=` | Lấy danh sách sách với tìm kiếm và lọc |
 | PATCH | `/api/books/{id}` | Cập nhật thông tin sách |
 | DELETE | `/api/books/{id}` | Xóa sách |
 
@@ -133,12 +133,12 @@ curl -X POST "http://localhost:8080/api/books" \
 
 ### Lấy danh sách tác giả
 ```bash
-curl -X GET "http://localhost:8080/api/authors?q=Nguyễn&page=0&size=10&sort=name,asc"
+curl -X GET "http://localhost:8080/api/authors?q=Nguyễn"
 ```
 
 ### Lấy danh sách sách theo tác giả
 ```bash
-curl -X GET "http://localhost:8080/api/books?authorId=1&page=0&size=10"
+curl -X GET "http://localhost:8080/api/books?authorId=1"
 ```
 
 ## Tính năng chính
@@ -147,7 +147,6 @@ curl -X GET "http://localhost:8080/api/books?authorId=1&page=0&size=10"
 - ✅ **OpenAPI 3 Specification** với Swagger UI
 - ✅ **Validation** với Bean Validation
 - ✅ **Exception Handling** toàn cục
-- ✅ **Pagination** và **Sorting**
 - ✅ **Search/Filter** functionality
 - ✅ **Database Relationships** (OneToMany/ManyToOne)
 - ✅ **Transaction Management**

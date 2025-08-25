@@ -4,8 +4,8 @@ import com.book.bookrestapi.domain.author.Author;
 import com.book.bookrestapi.dto.author.AuthorCreateRequest;
 import com.book.bookrestapi.dto.author.AuthorResponse;
 import com.book.bookrestapi.dto.author.AuthorUpdateRequest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface AuthorService {
 
@@ -20,9 +20,9 @@ public interface AuthorService {
     AuthorResponse getById(Long id);
 
     /**
-     * Lấy danh sách tác giả với filter và phân trang
+     * Lấy danh sách tác giả với filter
      */
-    Page<AuthorResponse> list(String keyword, Pageable pageable);
+    List<AuthorResponse> list(String keyword);
 
     /**
      * Cập nhật thông tin tác giả

@@ -9,11 +9,12 @@ import com.book.bookrestapi.service.AuthorService;
 import com.book.bookrestapi.service.BookService;
 import com.book.bookrestapi.web.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -48,20 +49,20 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<BookResponse> list(String keyword, Long authorId, Pageable pageable) {
-        Page<Book> books;
+    public List<BookResponse> list(String keyword, Long authorId) {
+        List<Book> books;
         
         if (StringUtils.hasText(keyword) && authorId != null) {
-            books = bookRepository.findByTitleContainingIgnoreCaseAndAuthorId(keyword, authorId, pageable);
+            books = bookRepository.findByTitleContainingIgnoreCaseAndAuthorId(keyword, authorId);
         } else if (StringUtils.hasText(keyword)) {
-            books = bookRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+            books = bookRepository.findByTitleContainingIgnoreCase(keyword);
         } else if (authorId != null) {
-            books = bookRepository.findByAuthorId(authorId, pageable);
+            books = bookRepository.findByAuthorId(authorId);
         } else {
-            books = bookRepository.findAll(pageable);
+            books = bookRepository.findAll();
         }
         
-        return books.map(this::toDto);
+        return books.stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Override

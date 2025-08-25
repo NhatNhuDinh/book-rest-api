@@ -19,8 +19,7 @@ paths:
       tags:
       - Books
       summary: Lấy danh sách sách
-      description: "Lấy danh sách sách với khả năng tìm kiếm theo tiêu đề, lọc theo\
-        \ tác giả và phân trang"
+      description: "Lấy danh sách sách với khả năng tìm kiếm theo tiêu đề và lọc theo tác giả"
       operationId: getBooks
       parameters:
       - name: q
@@ -38,18 +37,15 @@ paths:
           type: integer
           format: int64
         example: 1
-      - name: pageable
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/Pageable"
       responses:
         "200":
           description: Danh sách sách
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Page"
+                type: array
+                items:
+                  $ref: "#/components/schemas/BookResponse"
     post:
       tags:
       - Books
@@ -90,7 +86,7 @@ paths:
       tags:
       - Authors
       summary: Lấy danh sách tác giả
-      description: Lấy danh sách tác giả với khả năng tìm kiếm và phân trang
+      description: Lấy danh sách tác giả với khả năng tìm kiếm
       operationId: getAuthors
       parameters:
       - name: q
@@ -100,18 +96,15 @@ paths:
         schema:
           type: string
         example: Nguyễn
-      - name: pageable
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/Pageable"
       responses:
         "200":
           description: Danh sách tác giả
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Page"
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuthorResponse"
     post:
       tags:
       - Authors
@@ -457,85 +450,3 @@ components:
           description: Quốc gia của tác giả
           example: Việt Nam
       description: Request cập nhật tác giả
-    Pageable:
-      type: object
-      properties:
-        page:
-          minimum: 0
-          type: integer
-          format: int32
-        size:
-          minimum: 1
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            type: string
-    Page:
-      type: object
-      properties:
-        totalElements:
-          type: integer
-          format: int64
-        totalPages:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-        content:
-          type: array
-          items:
-            type: object
-        number:
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            $ref: "#/components/schemas/SortObject"
-        first:
-          type: boolean
-        last:
-          type: boolean
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: "#/components/schemas/PageableObject"
-        empty:
-          type: boolean
-    PageableObject:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int64
-        sort:
-          type: array
-          items:
-            $ref: "#/components/schemas/SortObject"
-        paged:
-          type: boolean
-        unpaged:
-          type: boolean
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-    SortObject:
-      type: object
-      properties:
-        direction:
-          type: string
-        nullHandling:
-          type: string
-        ascending:
-          type: boolean
-        property:
-          type: string
-        ignoreCase:
-          type: boolean

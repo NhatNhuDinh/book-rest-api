@@ -58,3 +58,4 @@ echo You can now access:
 echo - Swagger UI: http://localhost:8080/swagger-ui/index.html
 echo - OpenAPI JSON: http://localhost:8080/v3/api-docs
 echo - OpenAPI YAML: http://localhost:8080/v3/api-docs.yaml
+

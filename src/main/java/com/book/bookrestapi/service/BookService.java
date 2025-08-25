@@ -3,8 +3,8 @@ package com.book.bookrestapi.service;
 import com.book.bookrestapi.dto.book.BookCreateRequest;
 import com.book.bookrestapi.dto.book.BookResponse;
 import com.book.bookrestapi.dto.book.BookUpdateRequest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface BookService {
 
@@ -19,9 +19,9 @@ public interface BookService {
     BookResponse getById(Long id);
 
     /**
-     * Lấy danh sách sách với filter và phân trang
+     * Lấy danh sách sách với filter
      */
-    Page<BookResponse> list(String keyword, Long authorId, Pageable pageable);
+    List<BookResponse> list(String keyword, Long authorId);
 
     /**
      * Cập nhật thông tin sách

@@ -1,11 +1,10 @@
 package com.book.bookrestapi.repository;
 
 import com.book.bookrestapi.domain.author.Author;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,7 +21,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
     Optional<Author> findByNameIgnoreCase(String name);
 
     /**
-     * Tìm tác giả theo tên chứa từ khóa (không phân biệt hoa thường) với phân trang
+     * Tìm tác giả theo tên chứa từ khóa (không phân biệt hoa thường)
      */
-    Page<Author> findByNameContainingIgnoreCase(String name, Pageable pageable);
+    List<Author> findByNameContainingIgnoreCase(String name);
 }

@@ -14,12 +14,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -103,7 +102,7 @@ public class BookController {
     @GetMapping
     @Operation(
             summary = "Lấy danh sách sách",
-            description = "Lấy danh sách sách với khả năng tìm kiếm theo tiêu đề, lọc theo tác giả và phân trang"
+            description = "Lấy danh sách sách với khả năng tìm kiếm theo tiêu đề và lọc theo tác giả"
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -111,18 +110,17 @@ public class BookController {
                     description = "Danh sách sách",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = Page.class)
+                            schema = @Schema(implementation = List.class)
                     )
             )
     })
-    public ResponseEntity<Page<BookResponse>> getBooks(
+    public ResponseEntity<List<BookResponse>> getBooks(
             @Parameter(description = "Từ khóa tìm kiếm theo tiêu đề sách", example = "Truyện")
             @RequestParam(required = false) String q,
             @Parameter(description = "ID của tác giả để lọc", example = "1")
-            @RequestParam(required = false) Long authorId,
-            Pageable pageable
+            @RequestParam(required = false) Long authorId
     ) {
-        Page<BookResponse> response = bookService.list(q, authorId, pageable);
+        List<BookResponse> response = bookService.list(q, authorId);
         return ResponseEntity.ok(response);
     }
 
