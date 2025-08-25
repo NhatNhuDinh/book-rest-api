@@ -172,3 +172,26 @@ curl -X GET "http://localhost:8080/api/books?authorId=1&page=0&size=10"
 - API sử dụng UTF-8 encoding cho tiếng Việt
 - Tất cả responses đều có format JSON
 - Error responses có cấu trúc chuẩn với message rõ ràng
+
+## Khắc phục lỗi
+
+### Lỗi NoSuchMethodError với ApiExceptionHandler
+Nếu gặp lỗi `NoSuchMethodError: 'void org.springframework.web.method.ControllerAdviceBean.<init>(java.lang.Object)'` khi truy cập OpenAPI endpoints:
+
+1. **Tạm thời comment out ApiExceptionHandler** (đã được thực hiện)
+2. **Sử dụng version SpringDoc tương thích** (đã cập nhật)
+3. **Clean và rebuild project**:
+   ```bash
+   mvn clean compile
+   ```
+
+### Test API
+Chạy script test để kiểm tra API:
+```bash
+# Windows
+test-api.bat
+
+# Hoặc test thủ công
+curl http://localhost:8080/v3/api-docs.yaml
+curl http://localhost:8080/swagger-ui/index.html
+```

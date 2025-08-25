@@ -161,12 +161,6 @@ paths:
           format: int64
         example: 1
       responses:
-        "200":
-          description: Tìm thấy sách
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BookResponse"
         "404":
           description: Không tìm thấy sách
           content:
@@ -175,6 +169,12 @@ paths:
                 type: string
               example:
                 error: "Không tìm thấy sách với ID: 1"
+        "200":
+          description: Tìm thấy sách
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
     delete:
       tags:
       - Books
@@ -191,14 +191,14 @@ paths:
           format: int64
         example: 1
       responses:
+        "204":
+          description: Xóa thành công
         "404":
           description: Không tìm thấy sách
           content:
             application/json:
               schema:
                 type: string
-        "204":
-          description: Xóa thành công
     patch:
       tags:
       - Books
@@ -221,6 +221,12 @@ paths:
               $ref: "#/components/schemas/BookUpdateRequest"
         required: true
       responses:
+        "400":
+          description: Dữ liệu không hợp lệ
+          content:
+            application/json:
+              schema:
+                type: string
         "200":
           description: Cập nhật thành công
           content:
@@ -229,12 +235,6 @@ paths:
                 $ref: "#/components/schemas/BookResponse"
         "404":
           description: Không tìm thấy sách
-          content:
-            application/json:
-              schema:
-                type: string
-        "400":
-          description: Dữ liệu không hợp lệ
           content:
             application/json:
               schema:
@@ -256,6 +256,12 @@ paths:
           format: int64
         example: 1
       responses:
+        "200":
+          description: Tìm thấy tác giả
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorResponse"
         "404":
           description: Không tìm thấy tác giả
           content:
@@ -264,12 +270,6 @@ paths:
                 type: string
               example:
                 error: "Không tìm thấy tác giả với ID: 1"
-        "200":
-          description: Tìm thấy tác giả
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AuthorResponse"
     delete:
       tags:
       - Authors
@@ -316,12 +316,6 @@ paths:
               $ref: "#/components/schemas/AuthorUpdateRequest"
         required: true
       responses:
-        "404":
-          description: Không tìm thấy tác giả
-          content:
-            application/json:
-              schema:
-                type: string
         "200":
           description: Cập nhật thành công
           content:
@@ -330,6 +324,12 @@ paths:
                 $ref: "#/components/schemas/AuthorResponse"
         "400":
           description: Dữ liệu không hợp lệ
+          content:
+            application/json:
+              schema:
+                type: string
+        "404":
+          description: Không tìm thấy tác giả
           content:
             application/json:
               schema:
@@ -495,13 +495,13 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/SortObject"
-        numberOfElements:
-          type: integer
-          format: int32
         first:
           type: boolean
         last:
           type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
         pageable:
           $ref: "#/components/schemas/PageableObject"
         empty:
@@ -518,14 +518,14 @@ components:
             $ref: "#/components/schemas/SortObject"
         paged:
           type: boolean
+        unpaged:
+          type: boolean
         pageNumber:
           type: integer
           format: int32
         pageSize:
           type: integer
           format: int32
-        unpaged:
-          type: boolean
     SortObject:
       type: object
       properties:
